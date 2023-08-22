@@ -1,9 +1,9 @@
-const { Thought, User } = require('../models');
+const { User, Thoughts } = require('../models');
 
 module.exports = {
     getAllThoughts: async (req, res) => {
         try {
-            const thoughts = await Thought.find();
+            const thoughts = await Thoughts.find();
             res.json(thoughts);
         } catch (err) {
             res.status(500).json(err);
@@ -13,7 +13,7 @@ module.exports = {
     getOneThought: async (req, res) => {
         try {
             const thoughtId = req.params.thoughtId;
-            const thought = await Thought.findById(thoughtId);
+            const thought = await Thoughts.findById(thoughtId);
             if (!thought) {
                 return res.status(404).json({ message: 'Thought not found' });
             }
@@ -25,18 +25,8 @@ module.exports = {
 
     createThought: async (req, res) => {
         try {
-            const thoughtData = await Thought.create(req.body);
-            const userId = thoughtData.userId;
-            const user = await User.findById(userId);
-
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-
-            user.thoughts.push(thoughtData._id);
-            await user.save();
-
-            res.json(thoughtData);
+            const thought = await Thoughts.create(req.body);
+            res.json(thought);
         } catch (err) {
             res.status(400).json(err);
         }
@@ -45,7 +35,7 @@ module.exports = {
     updateThought: async (req, res) => {
         try {
             const thoughtId = req.params.thoughtId;
-            const updatedThought = await Thought.findByIdAndUpdate(thoughtId, req.body, { new: true });
+            const updatedThought = await Thoughts.findByIdAndUpdate(thoughtId, req.body, { new: true });
             if (!updatedThought) {
                 return res.status(404).json({ message: 'Thought not found' });
             }
@@ -58,7 +48,7 @@ module.exports = {
     deleteThought: async (req, res) => {
         try {
             const thoughtId = req.params.thoughtId;
-            const deletedThought = await Thought.findByIdAndDelete(thoughtId);
+            const deletedThought = await Thoughts.findByIdAndDelete(thoughtId);
             if (!deletedThought) {
                 return res.status(404).json({ message: 'Thought not found' });
             }
@@ -73,7 +63,7 @@ module.exports = {
             const thoughtId = req.params.thoughtId;
             const { reactionBody, username } = req.body;
 
-            const thought = await Thought.findById(thoughtId);
+            const thought = await Thoughts.findById(thoughtId);
             if (!thought) {
                 return res.status(404).json({ message: 'Thought not found' });
             }
@@ -92,7 +82,7 @@ module.exports = {
             const thoughtId = req.params.thoughtId;
             const reactionId = req.body.reactionId;
 
-            const thought = await Thought.findById(thoughtId);
+            const thought = await Thoughts.findById(thoughtId);
             if (!thought) {
                 return res.status(404).json({ message: 'Thought not found' });
             }

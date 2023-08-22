@@ -11,17 +11,17 @@ module.exports = {
     },
     createUser: async (req, res) => {
         try {
-            const userData = await User.create(req.body);
-            res.json(userData);
+            const user = await User.create(req.body);
+            res.json(user);
         } catch (err) {
             res.status(400).json(err);
         }
     },
     getOneUser: async (req, res) => {
         try {
-            const userId = req.params.userID;
-            const user = await User.findById(userId)
-                .select('-__v');
+            const userId = req.params.userId;
+            console.log(req.params)
+            const user = await User.findById(userId);
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -32,7 +32,7 @@ module.exports = {
     },
     updateUser: async (req, res) => {
         try {
-            const userId = req.params.userID;
+            const userId = req.params.userId;
             const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
             if (!updatedUser) {
                 return res.status(404).json({ message: 'User not found' });
@@ -44,7 +44,7 @@ module.exports = {
     },
     deleteUser: async (req, res) => {
         try {
-            const userId = req.params.userID;
+            const userId = req.params.userId;
             const deletedUser = await User.findByIdAndDelete(userId);
             if (!deletedUser) {
                 return res.status(404).json({ message: 'User not found' });

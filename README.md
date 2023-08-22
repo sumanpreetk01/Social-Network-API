@@ -3,6 +3,8 @@
 ## Description
 This is a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. In this application, Express.js for is used for routing, a MongoDB database, and the Mongoose ODM.
 
+The preview of the application can be viewed here: https://drive.google.com/file/d/19Zm2JqN7-M41qdE0gXfjcTE0SlX5vYNF/edit.
+
 ## Table of Contents
 
 - [Installation](#installation)

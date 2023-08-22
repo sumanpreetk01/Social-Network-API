@@ -8,7 +8,7 @@ router.route('/:userId')
     .put(userController.updateUser)
     .delete(userController.deleteUser);
 
-router.route('/users/:userId/friends/:friendId')
+router.route('/:userId/friends/:friendId')
     .post(userController.addFriend)
     .delete(userController.removeFriend)
 
